@@ -49,7 +49,10 @@ object FakeRepository {
             "c1",
             mutableListOf(
                 Message("m1", "c1", isMe = false, type = MessageType.TEXT, text = "你好！这个路线大概多久？", time = "10:20"),
-                Message("m2", "c1", isMe = true, type = MessageType.TEXT, text = "约 4-5 小时，包含休息拍照。", time = "10:21")
+                Message("m2", "c1", isMe = true, type = MessageType.TEXT, text = "约 4-5 小时，包含休息拍照。", time = "10:21"),
+                Message("m3", "c1", isMe = false, type = MessageType.TEXT, text = "好的，那大概几点开始呢？", time = "10:22"),
+                Message("m4", "c1", isMe = true, type = MessageType.TEXT, text = "早上8点集合，8点半准时出发", time = "10:23"),
+                Message("m5", "c1", isMe = false, type = MessageType.TEXT, text = "明白了，谢谢！", time = "10:24")
             )
         )
     }
