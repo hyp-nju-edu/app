@@ -99,8 +99,7 @@ class signin : AppCompatActivity() {
                 finish()
             }
         }
-
-            }
+    }
 
     private fun validatePhone(phone: String): Boolean {
         if (phone.isEmpty()) {

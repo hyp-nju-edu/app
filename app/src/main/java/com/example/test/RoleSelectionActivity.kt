@@ -2,12 +2,10 @@ package com.example.test
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.test.databinding.ActivityRoleSelectionBinding
 import com.example.test.leader.LeaderMainActivity
-
-
+import com.example.test.user.ActivityMainActivity
 class RoleSelectionActivity : AppCompatActivity() {
 
     private lateinit var vb: ActivityRoleSelectionBinding
@@ -40,10 +38,8 @@ class RoleSelectionActivity : AppCompatActivity() {
 
         vb.cardUser.setOnClickListener {
             saveUserRole("user")
-            // 暂时显示提示信息
-            vb.txtHint.text = "用户端正在开发中，请选择领队端进入。"
-            vb.cardUser.cardElevation = 0f
-            vb.cardUser.isEnabled = false
+            startActivity(Intent(this, ActivityMainActivity::class.java))
+            finish()
         }
     }
 

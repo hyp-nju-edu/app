@@ -12,12 +12,12 @@
         android:icon="@drawable/pintuan"/>
 
     <item
-        android:id="@+id/messages0"
+        android:id="@+id/messages"
         android:title="消息"
         android:icon="@android:drawable/ic_dialog_email" />
 
     <item
-        android:id="@+id/profile0"
+        android:id="@+id/profile"
         android:title="我的"
         android:icon="@android:drawable/ic_menu_myplaces" />
 </menu>
