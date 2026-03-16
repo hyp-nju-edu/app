@@ -14,7 +14,10 @@ import androidx.core.view.WindowInsetsCompat
 import com.example.test.databinding.ActivitySigninBinding
 import com.example.test.leader.LeaderMainActivity
 import com.example.test.RoleSelectionActivity
-
+import com.example.test.data.network.ApiClient
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 
 
@@ -52,18 +55,28 @@ class signin : AppCompatActivity() {
         // 设置获取验证码按钮点击事件
         vb.btnGetCode.setOnClickListener {
             val phone = vb.etPhone.text.toString().trim()
-            if (validatePhone(phone)) {
-                // TODO: 实现发送验证码功能
-                // 这里暂时只模拟发送验证码
-                Toast.makeText(this, "验证码已发送（模拟）", Toast.LENGTH_SHORT).show()
+            if (!validatePhone(phone)) return@setOnClickListener
 
-                // 禁用按钮并开始倒计时
-                vb.btnGetCode.isEnabled = false
-                startCountdown()
+            vb.btnGetCode.isEnabled = false
 
-                // 模拟验证码自动填充（实际应用中应该通过短信接收）
-                vb.etCode.setText("123456")
-            }
+            ApiClient.pingApi.ping().enqueue(object : Callback<String> {
+                override fun onResponse(call: Call<String>, response: Response<String>) {
+                    val body = response.body()?.trim()
+                    if (response.isSuccessful && body == "ok") {
+                        Toast.makeText(this@signin, "服务器连接成功，验证码已发送（示范）", Toast.LENGTH_SHORT).show()
+                        startCountdown()
+                        vb.etCode.setText("123456")
+                    } else {
+                        vb.btnGetCode.isEnabled = true
+                        Toast.makeText(this@signin, "服务器响应异常：${response.code()}", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onFailure(call: Call<String>, t: Throwable) {
+                    vb.btnGetCode.isEnabled = true
+                    Toast.makeText(this@signin, "连接失败：${t.message}", Toast.LENGTH_SHORT).show()
+                }
+            })
         }
 
         // 设置登录按钮点击事件

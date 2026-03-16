@@ -17,7 +17,11 @@ object FakeRepository {
             price = "¥199/人",
             peopleCount = 6,
             status = OrderStatus.AVAILABLE,
-            routeImageUrl = null
+            routeImageUrl = null,
+            customerName = "小李",
+            estimatedDuration = "约4-5小时",
+            estimatedStartTime = "08:30",
+            estimatedEndTime = "13:30"
         ),
         Order(
             id = "o2",
@@ -29,7 +33,11 @@ object FakeRepository {
             price = "¥99/人",
             peopleCount = 10,
             status = OrderStatus.TAKEN_BY_OTHER,
-            routeImageUrl = null
+            routeImageUrl = null,
+            customerName = "小王",
+            estimatedDuration = "约2小时",
+            estimatedStartTime = "20:00",
+            estimatedEndTime = "22:00"
         )
     )
 
