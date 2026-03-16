@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.test.R
 import com.example.test.data.FakeRepository
 import com.example.test.databinding.LeaderFragmentConversationBinding
@@ -24,6 +25,7 @@ class ConversationListFragment : Fragment(R.layout.leader_fragment_conversation)
             findNavController().navigate(R.id.action_messages_to_chat, args)
         }
         vb.recycler.adapter = adapter
+        vb.recycler.layoutManager = LinearLayoutManager(requireContext())
         adapter.submitList(FakeRepository.listConversations())
     }
 

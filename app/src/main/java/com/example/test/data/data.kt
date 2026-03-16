@@ -14,7 +14,11 @@ data class Order(
     val price: String,
     val peopleCount: Int,
     val status: OrderStatus,
-    val routeImageUrl: String? = null // 先用图片占位（url 或 null）
+    val routeImageUrl: String? = null, // 先用图片占位（url 或 null）
+    val customerName: String = "", // 客户姓名
+    val estimatedDuration: String = "", // 预估用时，如"4-5小时"
+    val estimatedStartTime: String = "", // 预估开始时间
+    val estimatedEndTime: String = "" // 预估结束时间
 )
 
 data class Conversation(

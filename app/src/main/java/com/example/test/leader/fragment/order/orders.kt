@@ -3,9 +3,11 @@ package com.example.test.leader.fragment.order
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.test.R
 import androidx.navigation.fragment.findNavController
 import com.example.test.data.FakeRepository
+import com.example.test.data.OrderStatus
 import com.example.test.databinding.LeaderFragmentOrdersBinding
 
 class OrderListFragment : Fragment(R.layout.leader_fragment_orders) {
@@ -19,29 +21,23 @@ class OrderListFragment : Fragment(R.layout.leader_fragment_orders) {
 
         val adapter = OrderAdapter(
             onItemClick = { order ->
-                val args = Bundle().apply { putString("orderId", order.id) }
-                findNavController().navigate(R.id.action_orders_to_orderDetail, args)
+                // 点击卡片跳转到接单确认页面（只对可接单的订单）
+                if (order.status == OrderStatus.AVAILABLE) {
+                    val args = Bundle().apply { putString("orderId", order.id) }
+                    findNavController().navigate(R.id.action_orders_to_orderConfirm, args)
+                } else {
+                    // 对其他状态的原先的详情页逻辑（可选）
+                    val args = Bundle().apply { putString("orderId", order.id) }
+                    findNavController().navigate(R.id.action_orders_to_orderDetail, args)
+                }
             },
             onAcceptClick = { order ->
-                val result = FakeRepository.acceptOrder(order.id)
-                // 简化：接单后刷新列表
-
-                // 接单成功则跳聊天
-                if (result.isSuccess) {
-                    val conv = FakeRepository.getConversationByOrder(order.id)
-                    if (conv != null) {
-                        val args = Bundle().apply {
-                            putString("conversationId", conv.id)
-                            putString("orderId", order.id)
-                        }
-                        findNavController().navigate(R.id.action_messages_to_chat, args)
-                    }
-                } else {
-                    // 这里你可以用 Snackbar/Toast 提示失败原因
-                }
+                // 现在接单按钮已经变成整个卡片，这个回调实际上不会单独被调用
+                // 保留以防万一，可以不做操作或者提示用户点击卡片
             }
         )
 
+        vb.recycler.layoutManager = LinearLayoutManager(context)
         vb.recycler.adapter = adapter
         adapter.submitList(FakeRepository.listOrders())
     }

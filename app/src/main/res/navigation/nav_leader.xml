@@ -11,6 +11,9 @@
         <action
             android:id="@+id/action_orders_to_orderDetail"
             app:destination="@id/orderDetail" />
+        <action
+            android:id="@+id/action_orders_to_orderConfirm"
+            app:destination="@id/orderConfirm" />
     </fragment>
 
     <fragment
@@ -31,6 +34,15 @@
         android:id="@+id/orderDetail"
         android:name="com.example.test.leader.fragment.order.OrderDetailFragment"
         android:label="路线详情">
+        <argument
+            android:name="orderId"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/orderConfirm"
+        android:name="com.example.test.leader.fragment.order.OrderConfirmFragment"
+        android:label="接单确认">
         <argument
             android:name="orderId"
             app:argType="string" />

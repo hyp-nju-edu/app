@@ -6,6 +6,7 @@ import android.view.View
 import com.example.test.R
 import android.net.Uri
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.test.data.FakeRepository
 import com.example.test.databinding.LeaderFragmentChatBinding
 
@@ -28,6 +29,7 @@ class ChatFragment : Fragment(R.layout.leader_fragment_chat) {
         val convId = requireArguments().getString("conversationId")!!
         val adapter = MessageAdapter()
         vb.recycler.adapter = adapter
+        vb.recycler.layoutManager = LinearLayoutManager(requireContext())
 
         vb.btnSend.setOnClickListener {
             val text = vb.edtInput.text?.toString().orEmpty().trim()
@@ -53,6 +55,9 @@ class ChatFragment : Fragment(R.layout.leader_fragment_chat) {
     private fun refresh(convId: String) {
         val list = FakeRepository.listMessages(convId)
         (vb.recycler.adapter as? MessageAdapter)?.submitList(list)
+        if (list.isNotEmpty()) {
+            vb.recycler.scrollToPosition(list.size - 1)
+        }
     }
 
     override fun onDestroyView() {
